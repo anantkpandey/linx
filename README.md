@@ -1,122 +1,75 @@
-# Linx 🧮
+# React + TypeScript + Vite
 
-### A Visual Laboratory for Linear Algebra
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-**Explore linear algebra through interactive visualizations and guided mathematical experiments.**
+Currently, two official plugins are available:
 
-Linx is an open-source educational project designed to make abstract linear algebra concepts intuitive through interactive, geometric exploration.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-Instead of merely reading equations, users will be able to manipulate vectors and matrices, observe transformations, and develop a deeper understanding of the mathematics behind them.
+## React Compiler
 
-> **Project status:** Early development. The interactive laboratory is planned; implementation is beginning.
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
----
+## Expanding the ESLint configuration
 
-## 🎯 Vision
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-Make linear algebra more intuitive, interactive, and accessible by connecting mathematical theory with visual experimentation.
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-Linx aims to help learners understand not only *how* linear algebra works, but also *why* its fundamental ideas matter.
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-## ✨ Planned Features
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 
-### 📍 Vectors
-- Vector addition and subtraction
-- Scalar multiplication
-- Dot products and vector magnitude
-- Geometric interpretation of vector operations
+```
 
-### 🔢 Matrices
-- Interactive matrix construction
-- Matrix addition and multiplication
-- Matrix-vector multiplication
-- Exploration of matrix properties
+You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
 
-### 🔄 Linear Transformations
-- Rotation, scaling, reflection, and shear
-- Interactive transformation of the coordinate plane
-- Visual interpretation of matrix columns
-- Exploration of invertible and singular transformations
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-### 📐 Linear Systems
-- Geometric interpretation of systems of equations
-- Visual exploration of intersections and solution sets
-- Connections between equations, matrices, and geometry
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 
-### 🧭 Advanced Concepts
-- Determinants and area scaling
-- Eigenvalues and eigenvectors
-- Vector spaces, span, and linear independence
-- Singular Value Decomposition (SVD)
-
-*Features will be introduced incrementally as the project develops.*
-
----
-
-## 🛠️ Technology Stack
-
-The initial implementation is planned around:
-
-- **TypeScript** — mathematical logic and application behavior
-- **React** — interactive user interface
-- **SVG or HTML Canvas** — geometric visualization
-- **Vite** — development tooling
-- **Vitest** — mathematical unit testing
-
-Technology choices may evolve as the project grows.
-
----
-
-## 🗺️ Roadmap
-
-- [ ] Define the mathematical and visualization architecture
-- [ ] Implement foundational vector operations
-- [ ] Implement 2 × 2 matrix operations
-- [ ] Build an interactive coordinate grid
-- [ ] Visualize basis vectors and linear transformations
-- [ ] Add mathematical explanations and worked examples
-- [ ] Introduce automated tests and continuous integration
-- [ ] Expand into determinants, eigenvectors, and decompositions
-- [ ] Publish a usable web application
-
----
-
-## 📚 Mathematical Principles
-
-Linx is built around a few core principles:
-
-1. **Mathematical correctness:** visualizations must represent the underlying mathematics accurately.
-2. **Transparency:** calculations should be inspectable rather than hidden behind unexplained results.
-3. **Interactivity:** learners should be able to experiment with mathematical objects.
-4. **Progressive learning:** foundational concepts should lead naturally to advanced topics.
-5. **Open knowledge:** documentation and examples should help others understand and extend the project.
-
----
-
-## 🌱 Contributing
-
-Linx is at an early stage, and its architecture and contribution workflow are still being established.
-
-Potential future contributions include:
-
-- Mathematical algorithms and validation
-- Interactive visualizations
-- Educational examples and explanations
-- Accessibility and usability improvements
-- Automated testing and documentation
-
-Please open an issue to discuss substantial changes before beginning implementation.
-
----
-
-## 📜 License
-
-Linx is distributed under the [MIT License](LICENSE).
-
----
-
-## 💡 Project Philosophy
-
-**Understand the mathematics. Visualize the behavior. Explore the possibilities.**
-
-Linx aims to turn linear algebra from a collection of abstract equations into an interactive mathematical experience.
+```
